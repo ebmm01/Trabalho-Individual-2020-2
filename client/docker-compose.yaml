@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  frontend:
+    container_name: front
+    restart: always
+    build: .
+    volumes:
+      - ./:/client
+    entrypoint: ["sh", "./start.sh"]
+    ports:
+      - 8080:8080
