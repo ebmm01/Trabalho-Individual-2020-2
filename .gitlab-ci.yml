@@ -6,10 +6,9 @@ stages:
 
 test:
   stage: test
-  before_script:
-    - yarn install --pure-lockfile --prefer-offline --cache-folder .yarn
   script:
     - cd client
+    - yarn install --prefer-offline --cache-folder .yarn
     - yarn test:unit:ci
   cache:
     key: "$CI_BUILD_REF_NAME"
@@ -19,9 +18,8 @@ test:
 
 build:
   stage: build
-  before_script:
-    - yarn install --pure-lockfile --prefer-offline --cache-folder .yarn
   script:
+    - yarn install --prefer-offline --cache-folder .yarn
     - cd client
     - yarn install --only=dev --no-shrinkwrap && yarn run build
   cache:
