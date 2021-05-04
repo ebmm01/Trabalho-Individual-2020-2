@@ -4,7 +4,7 @@ stages:
   - test
   - build
 
-client-test:
+test:
   stage: test
   before_script:
     - yarn install
@@ -16,8 +16,12 @@ client-test:
     paths:
       - client/.yarn
       - client/node_modules/
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - client/node_modules/
 
-client-build:
+build:
   stage: build
   before_script:
     - yarn install
@@ -28,4 +32,8 @@ client-build:
     key: "$CI_BUILD_REF_NAME"
     paths:
       - client/.yarn
+      - client/node_modules/
+  artifacts:
+    expire_in: 1 hour
+    paths:
       - client/node_modules/
