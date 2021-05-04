@@ -1,0 +1,37 @@
+version: '3.5'
+services:
+    db:
+        container_name: db
+        restart: always
+        image: postgres:9.6
+        ports:
+            - 5432:5432
+        env_file: .env.local
+        networks:
+            - api-network
+        volumes:
+            - pg-data:/var/lib/postgresql/data
+
+    api:
+        container_name: api
+        restart: always
+        build: .
+        env_file: .env.local
+        command: ["sh", "start.sh"]
+        ports:
+            - 8001:8001
+        networks:
+          - api-network
+        volumes:
+            - .:/api
+            - pip_cache:/usr/local/lib/python3.6/site-packages
+        depends_on:
+            - db
+
+volumes:
+    pg-data: {}
+    pip_cache:
+
+networks:
+  api-network:
+    external: true
