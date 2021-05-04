@@ -4,7 +4,7 @@ stages:
   - test
   - build
 
-client:
+client-test:
   stage: test
   before_script:
     - yarn install
@@ -17,13 +17,13 @@ client:
       - client/.yarn
       - client/node_modules/
 
-client:
+client-build:
   stage: build
   before_script:
     - yarn install
   script:
     - cd client
-    - yarn build
+    - yarn install --only=dev --no-shrinkwrap && yarn run build
   cache:
     key: "$CI_BUILD_REF_NAME"
     paths:
