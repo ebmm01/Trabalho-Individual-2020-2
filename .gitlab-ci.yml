@@ -7,7 +7,7 @@ stages:
 test:
   stage: test
   before_script:
-    - yarn install
+    - yarn install --pure-lockfile --prefer-offline --cache-folder .yarn
   script:
     - cd client
     - yarn test:unit:ci
@@ -16,15 +16,11 @@ test:
     paths:
       - client/.yarn
       - client/node_modules/
-  artifacts:
-    expire_in: 1 hour
-    paths:
-      - client/node_modules/
 
 build:
   stage: build
   before_script:
-    - yarn install
+    - yarn install --pure-lockfile --prefer-offline --cache-folder .yarn
   script:
     - cd client
     - yarn install --only=dev --no-shrinkwrap && yarn run build
@@ -32,8 +28,4 @@ build:
     key: "$CI_BUILD_REF_NAME"
     paths:
       - client/.yarn
-      - client/node_modules/
-  artifacts:
-    expire_in: 1 hour
-    paths:
       - client/node_modules/
