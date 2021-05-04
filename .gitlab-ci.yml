@@ -5,12 +5,25 @@ stages:
   - build
 
 client:
+  stage: test
+  before_script:
+    - yarn install
+  script:
+    - cd client
+    - yarn test:unit:ci
+  cache:
+    key: "$CI_BUILD_REF_NAME"
+    paths:
+      - client/.yarn
+      - client/node_modules/
+
+client:
   stage: build
   before_script:
     - yarn install
   script:
     - cd client
-    - yarn build:ssr
+    - yarn build
   cache:
     key: "$CI_BUILD_REF_NAME"
     paths:
