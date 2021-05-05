@@ -33,4 +33,5 @@ apiTest:
   stage: test
   script:
     - cd api/
+    - pip install --no-cache-dir -r requirements.txt
     - python manage.py test --verbosity=3
