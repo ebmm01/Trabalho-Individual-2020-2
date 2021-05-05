@@ -39,19 +39,8 @@ clientBuild:
       - client/.yarn
       - client/node_modules/
 
-apiTest:
-  image: docker:stable
-  stage: test
-  services:
-    - docker:dind  
-  script:
-    - cd api/
-    - apk add --no-cache docker-compose
-    - docker-compose build
-    - docker-compose exec api python manage.py test --verbosity=3
-
-docker:
-  stage: test
+apiBuild:
+  stage: build
   image: docker:stable
   services:
     - docker:dind
@@ -60,8 +49,3 @@ docker:
     - docker --version
   script:
     - docker build -t api .
-
-test:
-  stage: test
-  script:
-    - python manage.py test --verbosity=3
