@@ -32,4 +32,5 @@ apiTest:
   image: python:3.6
   stage: test
   script:
+    - cd api/
     - python manage.py test --verbosity=3
