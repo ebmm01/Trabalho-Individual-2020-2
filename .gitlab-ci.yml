@@ -2,6 +2,17 @@ stages:
   - test
   - build
 
+services:
+  - postgres:9.6
+
+variables:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  POSTGRES_PORT: 5432
+  POSTGRES_HOST: db
+  ENVIRONMENT: test
+  ALLOWED_HOSTS: '*'
+
 clientTest:
   image: node:12
   stage: test
@@ -33,5 +44,8 @@ apiTest:
   stage: test
   script:
     - cd api/
+    - apk update && \
+      apk add --no-cache --virtual build-deps gcc python3-dev musl-dev && \
+      apk add postgresql-dev
     - pip install --no-cache-dir -r requirements.txt
     - python manage.py test --verbosity=3
