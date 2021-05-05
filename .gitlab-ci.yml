@@ -1,10 +1,9 @@
-image: node:12
-
 stages:
   - test
   - build
 
-test:
+clientTest:
+  image: node:12
   stage: test
   script:
     - cd client
@@ -16,7 +15,8 @@ test:
       - client/.yarn
       - client/node_modules/
 
-build:
+clientBuild:
+  image: node:12
   stage: build
   script:
     - yarn install --prefer-offline --cache-folder .yarn
@@ -27,3 +27,9 @@ build:
     paths:
       - client/.yarn
       - client/node_modules/
+
+apiTest:
+  image: python:3.6
+  stage: test
+  script:
+    - python manage.py test --verbosity=3
