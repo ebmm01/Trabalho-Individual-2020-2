@@ -42,6 +42,9 @@ clientBuild:
 apiTest:
   image: docker:stable
   stage: test
+  services:
+    - docker:dind  
   script:
     - cd api/
+    - apk add --no-cache docker-compose
     - docker-compose exec api python manage.py test --verbosity=3
